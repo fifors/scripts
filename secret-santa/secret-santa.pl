@@ -134,9 +134,9 @@ while ($#partners >= 0) {
             $dup = $dupl{ $names[$pers] };
         }
 
-        #print "Partner: $partners[$index]\tname: $names[$pers]\tdup: $dup\n";
-        if ($dup =~ /$partners[$index]/) {
-            print "Fixing duplicate, old index: $index\n";
+        #print "Partner: '$partners[$index]'\tname: '$names[$pers]'\tdup: '$dup'\n";
+        if ($dup =~ /$names[$pers]/ || $partners[$index] =~ /$names[$pers]/) {
+            #print "Fixing duplicate, old index: $index\n";
             $index = int(rand($#partners));
             for (my $i = 0 ; (($partners[$index] eq $dup)) ; $i++) {
                 if ($i == 5) {
@@ -147,8 +147,11 @@ while ($#partners >= 0) {
                 $index = int(rand($#partners));
             }
 
-            print "new index: $index\n";
-        }
+            #print "new index: $index\n";
+        } else {
+	    print "going last\n";
+	    last;
+	}
     }
 
     $el = splice(@partners, $index, 1);
